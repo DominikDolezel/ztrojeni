@@ -1,5 +1,6 @@
 #include <iostream>
 #include <bitset>
+#include <time.h>
 
 using namespace std;
 
@@ -71,6 +72,7 @@ bitset <BITU * 3> nahodnaZmena(bitset <BITU * 3> ztrojeno) {
     int zmenene_cislice[pocet_spatnych_cislic], pozice_cislice;
     short na_pozici;
     bitset <BITU * 3> maska;
+    bitset <BITU * 3> na_poz_bitset;
     naplnPoleNulami(zmenene_cislice, pocet_spatnych_cislic);
 
     for (int i = 0; i < pocet_spatnych_cislic; i++) {
@@ -80,7 +82,14 @@ bitset <BITU * 3> nahodnaZmena(bitset <BITU * 3> ztrojeno) {
         zmenene_cislice[i] = pozice_cislice;
 
         maska = vytvorMasku(BITU * 3 - pozice_cislice - 1);
-        na_pozici = maska & ztrojeno;
+
+        na_poz_bitset = maska & ztrojeno;
+
+        if(na_poz_bitset == nula) {
+            na_pozici = 0;
+        } else {
+            na_pozici = 1;
+        }
 
         if (na_pozici) {
             maska = ~maska;
@@ -88,8 +97,17 @@ bitset <BITU * 3> nahodnaZmena(bitset <BITU * 3> ztrojeno) {
         } else {
             ztrojeno = ztrojeno | maska;
         }
-        cout << ztrojeno;
     }
+    cout << "zmeneno: " << ztrojeno << endl;
+    cout << "zmenene cislice: ";
+    for (int i = 0; i < pocet_spatnych_cislic; i++) {
+        cout << zmenene_cislice[i] + 1 << ". ";
+    }
+    return ztrojeno;
+}
+
+void oprava(bitset <BITU * 3> zmeneno) {
+    bitset <BITU * 3>
 }
 
 int main()
@@ -102,4 +120,6 @@ int main()
     ztrojeno = ztrojeni(vstup);
 
     zmeneno = nahodnaZmena(ztrojeno);
+
+    oprava(zmeneno);
 }
